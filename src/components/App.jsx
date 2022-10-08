@@ -2,6 +2,7 @@ import { Component } from "react"
 import { Searchbar } from "./Searchbar/Searchbar"
 import { toast, ToastContainer } from "react-toastify";
 import { fetchImage } from "services/api";
+import { Loader } from "./Loader/Loader";
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageGallery } from "./Searchbar/ImageGallery/ImageGallery";
 
@@ -49,12 +50,14 @@ export class App extends Component {
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
     <div
       style={{
         padding: 20
       }}
-    >
+      >
+        {isLoading && <Loader/>}
         <Searchbar onSubmit={this.handleSearchbarSubmit} />
         <ToastContainer autoClose={2000} />
         <ImageGallery images={this.state.images} />
