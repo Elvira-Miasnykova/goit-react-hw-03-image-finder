@@ -6,7 +6,7 @@ export const Loader = () => {
             width="80"
             color="#4fa94d"
             ariaLabel="circles-loading"
-            wrapperStyle={{}}
+            wrapperStyle={{ position: "fixed", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
             wrapperClass=""
             visible={true}
         />

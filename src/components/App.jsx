@@ -32,10 +32,11 @@ export class App extends Component {
         this.setState({isLoading: false});
       }
       } catch (error) {
-        //this.setState({ isLoading: true });
+        this.setState({ isLoading: true });
         console.log(error)
-        //this.setState({ isLoading: false })
-    } finally { this.setState({ isLoading: false }) };
+        this.setState({ isLoading: false })
+    }
+    // finally { this.setState({ isLoading: false }) };
     }
   
 
