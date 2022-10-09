@@ -17,32 +17,28 @@ export class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    //this.setState({isLoading: true});
-    try {
-      const { page, imageName } = this.state;
-      //this.setState({isLoading: true});
+    //try {
+      const { page, imageName} = this.state;
       if (prevState.imageName !== imageName ||
         page !== prevState.page) {
         this.setState({isLoading: true});
-        const response = await fetchImage(page, imageName);
-          return (
-            response.hits.length === 0
-              ? toast.error('Oops! We did not find any images matching your request. Please try again.')
-              : this.setState(prevState => ({
-                images: [...prevState.images, ...response.hits],
-               //isLoading: false,
-              }))
-              
-          )
+        await fetchImage(page, imageName)
+          .then(data => {
+            return (
+              data.hits.length === 0
+                ? toast.error('Oops! We did not find any images matching your request. Please try again.')
+                : this.setState(prevState => ({
+                  images: [...prevState.images, ...data.hits],
+                  isLoading: false,
+                  }))
+                  )
+          })
+          .catch(error => console.log(error))
+        .finally(() => this.setState({ isLoading: false }));
         
-        
-      } 
-    } 
-    catch (error) {
-          console.log(error)
       }
-       finally {this.setState({ isLoading: false });
-      }
+      
+    
     }
   
 
