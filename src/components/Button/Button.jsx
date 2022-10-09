@@ -4,7 +4,7 @@ import { Box } from 'Box';
 
 export const Button = ({ handleClick }) => {
     return (
-        <Box display="flex" justify-content="center">
+        <Box display="flex" justifyCcontent="center">
         
             <ButtonLoad onClick={() => handleClick()}>
             Loadmore
