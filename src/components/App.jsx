@@ -17,28 +17,32 @@ export class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
+    //this.setState({isLoading: true});
     try {
-      const { page, imageName} = this.state;
+      const { page, imageName } = this.state;
+      //this.setState({isLoading: true});
       if (prevState.imageName !== imageName ||
         page !== prevState.page) {
         this.setState({isLoading: true});
-        await fetchImage(page, imageName).then(data => {
+        const response = await fetchImage(page, imageName);
           return (
-            data.hits.length === 0
+            response.hits.length === 0
               ? toast.error('Oops! We did not find any images matching your request. Please try again.')
               : this.setState(prevState => ({
-                images: [...prevState.images, ...data.hits],
+                images: [...prevState.images, ...response.hits],
+               //isLoading: false,
               }))
+              
           )
-        })
-        this.setState({isLoading: false});
+        
+        
+      } 
+    } 
+    catch (error) {
+          console.log(error)
       }
-      } catch (error) {
-        this.setState({ isLoading: true });
-        console.log(error)
-        this.setState({ isLoading: false })
-    }
-    // finally { this.setState({ isLoading: false }) };
+       finally {this.setState({ isLoading: false });
+      }
     }
   
 
@@ -61,7 +65,7 @@ export class App extends Component {
   render() {
     const { isLoading, images } = this.state;
     return (
-    <Box margin="0 auto" padding="20">
+    <Box margin="0 auto" paddingTop="20px" paddingBottom="20px">
         {isLoading && <Loader/>}
         <Searchbar onSubmit={this.handleSearchbarSubmit} />
         <ToastContainer autoClose={2000} />
