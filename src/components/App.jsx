@@ -5,6 +5,8 @@ import { fetchImage } from "services/api";
 import { Loader } from "./Loader/Loader";
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageGallery } from "./Searchbar/ImageGallery/ImageGallery";
+import { Button } from "./Button/Button";
+import { Box } from "Box";
 
 export class App extends Component {
   state = {
@@ -50,19 +52,22 @@ export class App extends Component {
     
   };
 
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
+
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, images } = this.state;
     return (
-    <div
-      style={{
-        padding: 20
-      }}
-      >
+    <Box margin="0 auto" padding="20">
         {isLoading && <Loader/>}
         <Searchbar onSubmit={this.handleSearchbarSubmit} />
         <ToastContainer autoClose={2000} />
         <ImageGallery images={this.state.images} />
-    </div>
+        {images.length > 0 && <Button handleClick={this.loadMore} />}
+    </Box>
   );
   }
   
